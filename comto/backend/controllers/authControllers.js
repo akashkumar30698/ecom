@@ -30,7 +30,7 @@ async function handleAdminLogin(req, res){
       .cookie('token', token, {
         httpOnly: true,
         sameSite: 'Lax',
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000
       })
       .json({
