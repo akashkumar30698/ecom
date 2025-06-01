@@ -27,13 +27,13 @@ const PutProduct = async (req, res) => {
   try {
     const { searchByUniqueId } = req.params;
 
-    if (!searchByUniqueId) {
+    if (!searchByUniqueId && req.body.searchByUniqueId) {
       return res.status(400).json({ message: "Missing product identifier" });
     }
 
     // Update by searchByUniqueId field
     const updated = await Product.findOneAndUpdate(
-      { searchByUniqueId },
+      { searchByUniqueId: req.body.searchByUniqueId },
       req.body,
       { new: true }
     );
