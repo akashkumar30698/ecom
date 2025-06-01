@@ -93,7 +93,7 @@ app.use("/api/payment", paymentRoutes);
 
 
 // GET /api/products
-app.get("/api/products/filtered", async (req, res) => {
+app.get("/api/filtered", async (req, res) => {
   try {
     let {
       category,
