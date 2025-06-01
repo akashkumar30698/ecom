@@ -3,6 +3,9 @@ const Product = require("../model/ProductModel");
 const createProduct = async (req, res) => {
   try {
     const newProduct = new Product(req.body);
+    if(!req.body.searchByUniqueId){
+      return  res.status(500).json({ message: "no search id found" });
+    }
     const savedProduct = await newProduct.save();
     return  res.status(201).json(savedProduct);
   } catch (err) {
@@ -21,15 +24,31 @@ const deleteProduct = async (req, res) => {
 };
 
 const PutProduct = async (req, res) => {
-   try {
-   const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-   return res.json(updated);
-   }catch(err){
-       console.log("some error occured",err)
-      return  res.status(500).json({ message: err.message });
-   }
- 
-}
+  try {
+    const { searchByUniqueId } = req.params;
+
+    if (!searchByUniqueId) {
+      return res.status(400).json({ message: "Missing product identifier" });
+    }
+
+    // Update by searchByUniqueId field
+    const updated = await Product.findOneAndUpdate(
+      { searchByUniqueId },
+      req.body,
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    return res.json(updated);
+  } catch (err) {
+    console.error("Update error:", err);
+    return res.status(500).json({ message: "Internal Server Error", error: err.message });
+  }
+};
+
 
 const getAllThings = async (req, res) => {
   try {
