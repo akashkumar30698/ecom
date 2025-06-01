@@ -8,7 +8,7 @@ const Product = require("../model/ProductModel")
     const saved = await product.save();
  return   res.status(201).json(saved);
   } catch (err) {
-  return  res.status(400).json({ error: err.message });
+   return  res.status(400).json({ error: err.message });
   }
 };
 
