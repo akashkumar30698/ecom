@@ -25,10 +25,10 @@ const deleteProduct = async (req, res) => {
 
 const PutProduct = async (req, res) => {
   try {
-    const { searchByUniqueId } = req.params;
+   // const { searchByUniqueId } = req.params;
 
-    if (!searchByUniqueId && req.body.searchByUniqueId) {
-      return res.status(400).json({ message: "Missing product identifier" });
+    if (!req.body.searchByUniqueId) {
+      return res.status(400).json({ message: "Missing product identifier changed" });
     }
 
     // Update by searchByUniqueId field
