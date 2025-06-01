@@ -26,14 +26,12 @@ async function handleAdminLogin(req, res){
       { expiresIn: '1d' }
     );
 
- return   res
-      .cookie('token', token, {
+ return  res.cookie('token', token, {
         httpOnly: true,
         sameSite: 'Lax',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000
-      })
-      .json({
+      }).json({
         message: 'Login successful',
         user: {
           id: process.env.ADMIN_ID,
